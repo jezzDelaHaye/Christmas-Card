@@ -5,11 +5,13 @@ let santaRight;
 let santaLeft;
 let currentSanta;
 let elf;
-let caughtCount =0;
-let lostCount =0;
+let caughtCount = 0;
+let lostCount = 0;
 let caughtSound;
 let lostSound;
 let currentSound;
+let gameOver;
+let gameStart;
 
 function preload()
 {
@@ -23,14 +25,25 @@ function setup()
 {
     createCanvas(400,750)
     dropPoint = random(0,width);
+    gameStart = true;
 }
 function draw()
 {
     background(0,140,255)
     drawBackground();
-    drawCatcher();
-    drawDropper();
-    dropPresents();  
+    if(gameStart === true )
+    {
+        starterScreen();
+    }
+    if (gameStart === false)
+    {
+        drawCatcher();
+        drawDropper();
+        dropPresents(); 
+        showCounters();
+    }
+    gameOverCondition();
+    console.log(caughtCount)
 }
 
 function drawCatcher()
@@ -114,16 +127,14 @@ function dropPresents()
 
 function caughtPresent()
 {
-    console.log('present caught')
     caughtCount++;
     //caughtSound.play();
 }
 
 function lostPresent()
 {
-    console.log('present lost')
-    lostCount--;
-    //lostSound.play()
+    lostCount++;
+    ///lostSound.play()
 }
 
 function drawPresent(x,y,s,c1,c2,c3)
@@ -155,6 +166,89 @@ function drawBackground()
     rectMode(CENTER)
     rect(270,530,10,20)
     
+}
+
+function starterScreen()
+{
+    textSize(20);
+    fill(0);
+    textAlign(CENTER,CENTER)
+    text('catch 50 presents to win!',width/2,350)
+    startButton();
+}
+
+function mousePressed()
+{
+    if (gameStart === true)
+    {
+        if (mouseX >= 100 && mouseX <= 300 && mouseY >= 370 && mouseY <= 430)
+        {
+           
+            gameStart = false;
+        }
+    }
+    if (gameStart === null)
+    {
+        if (mouseX >= 100 && mouseX <= 300 && mouseY >= 370 && mouseY <= 430)
+        {
+           
+            gameStart = false;
+        }
+    }
+}
+
+function gameOverCondition()
+{
+    if (caughtCount >= 50)
+    {
+        gameStart = true;
+        lostCount = 0;
+        caughtCount = 0;
+    }
+    if (lostCount >= 15)
+    {
+        gameStart = true;
+        lostCount = 0;
+        caughtCount = 0;
+    }
+}
+
+function winScreen()
+{
+    textSize(20);
+    fill(0);
+    textAlign(CENTER,CENTER)
+    text('you won!',width/2,350)
+    startButton()
+}
+
+function failScreen()
+{
+    textSize(20);
+    fill(0);
+    textAlign(CENTER,CENTER)
+    text('you lost!',width/2,350)
+    startButton();
+}
+
+function startButton()
+{
+    rectMode(CENTER)
+    fill(255)
+    rect(width/2,400,120,60)
+    fill(0)
+    text('play',width/2,400)
+    
+}
+
+function showCounters()
+{
+    fill(255,0,0);
+    textSize(20);
+
+    text(`caught: ${caughtCount}`, 50, 100);
+    text(`lost: ${lostCount}`, 35, 130);
+
 }
 //add start 
 //add end 
