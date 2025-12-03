@@ -9,7 +9,6 @@ let caughtCount = 0;
 let lostCount = 0;
 let caughtSound;
 let lostSound;
-let currentSound;
 let gameOver;
 let gameStart;
 
@@ -21,12 +20,14 @@ function preload()
     caughtSound = loadSound('/assets/catch.mp3')
     lostSound = loadSound('/assets/drop.mp3')
 }
+
 function setup()
 {
     createCanvas(400,750)
     dropPoint = random(0,width);
     gameStart = true;
 }
+
 function draw()
 {
     background(0,140,255)
@@ -41,9 +42,9 @@ function draw()
         drawDropper();
         dropPresents(); 
         showCounters();
-    }
-    gameOverCondition();
-    console.log(caughtCount)
+        backingTrack.Play();
+    }  
+    gameOverCondition();  
 }
 
 function drawCatcher()
@@ -128,13 +129,13 @@ function dropPresents()
 function caughtPresent()
 {
     caughtCount++;
-    //caughtSound.play();
+    caughtSound.play();
 }
 
 function lostPresent()
 {
     lostCount++;
-    ///lostSound.play()
+    lostSound.play()
 }
 
 function drawPresent(x,y,s,c1,c2,c3)
@@ -250,6 +251,8 @@ function showCounters()
     text(`lost: ${lostCount}`, 35, 130);
 
 }
+
+
 //add start 
 //add end 
 //add backing track
