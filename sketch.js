@@ -1,6 +1,7 @@
 let dropPoint;
 let dropperPos =50;
 let presents = [];
+let snowParticles = []
 let santaRight;
 let santaLeft;
 let currentSanta;
@@ -38,11 +39,12 @@ function draw()
     }
     if (gameStart === false)
     {
+        drawSnow();
         drawCatcher();
         drawDropper();
         dropPresents(); 
         showCounters();
-        backingTrack.Play();
+        
     }  
     gameOverCondition();  
 }
@@ -175,6 +177,7 @@ function starterScreen()
     fill(0);
     textAlign(CENTER,CENTER)
     text('catch 50 presents to win!',width/2,350)
+    image(elf,width/2,600,300,300)
     startButton();
 }
 
@@ -214,24 +217,6 @@ function gameOverCondition()
     }
 }
 
-function winScreen()
-{
-    textSize(20);
-    fill(0);
-    textAlign(CENTER,CENTER)
-    text('you won!',width/2,350)
-    startButton()
-}
-
-function failScreen()
-{
-    textSize(20);
-    fill(0);
-    textAlign(CENTER,CENTER)
-    text('you lost!',width/2,350)
-    startButton();
-}
-
 function startButton()
 {
     rectMode(CENTER)
@@ -250,6 +235,26 @@ function showCounters()
     text(`caught: ${caughtCount}`, 50, 100);
     text(`lost: ${lostCount}`, 35, 130);
 
+}
+
+function drawSnow()
+{
+    
+    let snow = 
+    {
+        x: random(0,400),
+        y: random(0,10),
+        s: random(10,20)
+    }
+    snowParticles.push(snow)
+
+    for (let i = 0; i < snowParticles.length; i++)
+    {
+        fill(255)
+        snowParticles[i].x += random(-1,1)
+        snowParticles[i].y += 3
+        circle(snowParticles[i].x,snowParticles[i].y,snowParticles[i].s)
+    }
 }
 
 
